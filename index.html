@@ -1999,4 +1999,20 @@ else{$('anote').textContent='This browser cannot speak, so captions will advance
 caption('Ready','Press "Full lesson" to hear the whole program explained and then watch a test case run step by step.',true);
 </script>
 
+<script data-goatcounter="https://sushmasj.goatcounter.com/count" data-goatcounter-settings='{"no_onload": true}' async src="//gc.zgo.at/count.js"></script>
+<script>
+/* Visitor counting (GoatCounter): each program counts as its own page, e.g. /python-lab/#hanoi */
+(function(){
+  let last='';
+  function gcCount(tries){
+    const path=location.pathname+(location.hash||'');
+    if(path===last)return;
+    if(window.goatcounter&&window.goatcounter.count){last=path;
+      try{window.goatcounter.count({path:path,title:(typeof topic!=='undefined'&&topic?topic.title:document.title)});}catch(e){}}
+    else if((tries||0)<20)setTimeout(()=>gcCount((tries||0)+1),500);
+  }
+  window.addEventListener('load',()=>gcCount(0));
+  window.addEventListener('hashchange',()=>gcCount(0));
+})();
+</script>
 </body></html>
