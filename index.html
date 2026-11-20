@@ -143,6 +143,20 @@ pre.code{position:relative;margin:0;background:var(--editor);color:var(--editor-
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
+<style>
+.sitebar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 16px;border-left:6px solid var(--blue)}
+.sitebar .sname{font:800 1.15em var(--f-body);color:var(--ink)}
+.sitebar .sname span{color:var(--blue)}
+.author{display:flex;align-items:center;gap:10px}
+.author .av{width:40px;height:40px;border-radius:50%;background:var(--blue);color:var(--panel);display:grid;place-items:center;font:800 .95em var(--f-body);flex:none}
+.author .who{line-height:1.3}
+.author .who b{display:block;font-size:.95em;color:var(--ink)}
+.author .who small{font-size:.8em;color:var(--muted);font-weight:600}
+.sitefoot{display:flex;flex-direction:column;align-items:center;gap:8px;justify-content:center;background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--blue);border-radius:14px;padding:14px 16px}
+.sitefoot .who{text-align:left}
+.aicredit{margin:0;font-size:.74em;color:var(--muted);text-align:center;max-width:760px;border-top:1px dashed var(--line);padding-top:8px}
+.sitefoot b{color:var(--ink)}
+</style>
 <div class="wrap">
   <nav id="nav" aria-label="Topics"></nav>
   <header>
@@ -188,6 +202,65 @@ pre.code{position:relative;margin:0;background:var(--editor);color:var(--editor-
       <div class="facts" id="facts"></div>
     </section>
   </div>
+<style>
+/* ---- Try your own code ---- */
+.tryit{background:var(--panel);border:1px solid var(--line);border-top:6px solid var(--green);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.tryit h3{margin:0;font-size:1.05em;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tryit h3 small{font-weight:600;color:var(--muted);font-size:.78em}
+.trygrid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:12px}
+@media (max-width:900px){.trygrid{grid-template-columns:1fr}}
+.trycol{display:flex;flex-direction:column;gap:6px;min-width:0}
+.trycol label{font:800 .72em var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+#tryCode{font:500 .9em/1.45 var(--f-mono);background:var(--editor-bg,#1e1f29);color:var(--editor-ink,#e8e8f0);border:2px solid var(--line);border-radius:10px;padding:10px 12px;min-height:300px;resize:vertical;tab-size:4;white-space:pre;overflow:auto}
+#tryIn{font:600 .9em/1.4 var(--f-mono);border:2px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--bg);color:var(--ink);min-height:120px;resize:vertical}
+.trybtns{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#tryRun{background:var(--green);border-color:var(--green);color:var(--panel)}
+#tryCheck{border-color:var(--blue);color:var(--blue)}
+.trybtns .muted{font-size:.78em;color:var(--muted)}
+.trystatus{font-size:.85em;font-weight:700;color:var(--muted);min-height:1.2em}
+.trystatus.err{color:var(--red)} .trystatus.ok{color:var(--green)}
+#tryOut{font:500 .86em/1.45 var(--f-mono);background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:8px 10px;min-height:120px;max-height:24em;overflow:auto;white-space:pre-wrap;margin:0}
+#tryOut .perr{color:var(--red)}
+.verdict{font-weight:800;padding:8px 12px;border-radius:10px}
+.verdict.ok{background:var(--green-soft);color:var(--green)} .verdict.bad{background:var(--red-soft);color:var(--red)}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cmp pre{font:500 .82em/1.45 var(--f-mono);background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:8px 10px;margin:0;max-height:20em;overflow:auto;white-space:pre-wrap}
+.cmp .diff{background:var(--red-soft);color:var(--red);display:block}
+.cmp .h{font:800 .7em var(--f-mono);color:var(--muted);text-transform:uppercase;margin-bottom:4px}
+.trynote{font-size:.85em;padding:10px 12px;border-radius:10px;background:var(--orange-soft);color:var(--ink)}
+.chk{display:flex;align-items:center;gap:6px;font-size:.8em;font-weight:700;color:var(--muted)}
+</style>
+<section class="tryit" id="tryit" aria-label="Try your own code">
+  <h3>✍️ Try your own code <small>Edit the given program or write your own, then run it here. Python runs inside your browser.</small></h3>
+  <div class="trygrid">
+    <div class="trycol">
+      <label for="tryCode">Your Python code</label>
+      <textarea id="tryCode" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+      <div class="trybtns">
+        <button id="tryRun">▶ Run my code</button>
+        <button id="tryCheck">✔ Check with the given program</button>
+        <button id="tryLoad">↺ Load the given program</button>
+        <button id="tryClear">⌫ Clear</button>
+        <span class="muted">Ctrl + Enter runs · Tab indents</span>
+      </div>
+    </div>
+    <div class="trycol">
+      <label for="tryIn">Input (one value per line, used by input())</label>
+      <textarea id="tryIn" spellcheck="false"></textarea>
+      <div class="trybtns"><button id="tryUseCase">Use the test case input</button>
+        <label class="chk"><input type="checkbox" id="tryNums"> Compare numbers only</label></div>
+      <div class="trystatus" id="tryStatus"></div>
+      <label for="tryOut">Output</label>
+      <pre id="tryOut"></pre>
+    </div>
+  </div>
+  <div id="tryCmp"></div>
+</section>
+  <footer class="sitefoot" role="contentinfo">
+    <div class="author"><div class="av" aria-hidden="true">SJ</div>
+      <div class="who"><small>Developed by</small><b>Dr. Sushma S J</b><small>Associate Professor, GSSSIETW, Mysuru</small></div></div>
+    <p class="aicredit">Animations and explanations prepared with the help of Claude, an AI assistant by Anthropic. Content reviewed by Dr.&nbsp;Sushma&nbsp;S&nbsp;J.</p>
+  </footer>
 </div>
 <style>
 .w-ops{width:min(440px,100%)}
@@ -2015,4 +2088,165 @@ caption('Ready','Press "Full lesson" to hear the whole program explained and the
   window.addEventListener('hashchange',()=>gcCount(0));
 })();
 </script>
+<script>
+/* ===================== TRY YOUR OWN CODE (Pyodide in a Web Worker) ===================== */
+(function(){
+  const PY_URL=new URL(window.PYODIDE_URL||'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/',location.href).href;
+  const TIME_LIMIT=10000;
+  const WORKER_SRC=`
+    let py=null,loading=null;
+    async function init(url){
+      importScripts(url+'pyodide.js');
+      py=await loadPyodide({indexURL:url});
+    }
+    const PRE=\`
+import builtins, sys
+def __mk_input(lines, echo):
+    it = iter(lines)
+    def _input(prompt=''):
+        try:
+            v = next(it)
+        except StopIteration:
+            raise EOFError('no more input: add more lines in the Input box') from None
+        if echo:
+            print(str(prompt) + v)
+        return v
+    return _input
+\`;
+    onmessage=async e=>{
+      const d=e.data;
+      try{ if(!py){postMessage({type:'status',msg:'Loading Python (first time only, about 10 MB)…'}); loading=loading||init(d.url); await loading;} }
+      catch(err){ postMessage({type:'fatal',msg:String(err)}); return; }
+      let out='';
+      py.setStdout({batched:s=>{out+=s+'\\n';}});
+      py.setStderr({batched:s=>{out+=s+'\\n';}});
+      try{
+        for(const [n,c] of Object.entries(d.files||{})) py.FS.writeFile(n,c);
+        await py.runPythonAsync(PRE);
+        const g=py.globals.get('dict')();
+        g.set('__name__','__main__');
+        const mk=py.globals.get('__mk_input');
+        py.globals.get('builtins').input=mk(py.toPy(d.stdin),d.echo);
+        await py.runPythonAsync(d.code,{globals:g,filename:'my_program.py'});
+        py.runPython('import sys; sys.stdout.flush(); sys.stderr.flush()');
+        postMessage({type:'done',ok:true,out,id:d.id});
+      }catch(err){
+        try{py.runPython('import sys; sys.stdout.flush(); sys.stderr.flush()');}catch(_){}
+        let msg=String(err.message||err);
+        const L=msg.split('\\n'),keep=[];let inMine=false,seen=false;
+        for(const l of L){ if(/^\\s*File "/.test(l)){inMine=/File "my_program\\.py"/.test(l);if(inMine){seen=true;keep.push(l);}continue;}
+          if(/^\\s/.test(l)){if(inMine)keep.push(l);continue;} if(seen||/Error|Exception/.test(l)){inMine=false;if(!/^Traceback/.test(l))keep.push(l);} }
+        msg=(seen?'Traceback (most recent call last):\\n':'')+keep.join('\\n').replace(/\\s+$/,'');
+        postMessage({type:'done',ok:false,out,err:msg,id:d.id});
+      }
+    };`;
+  let worker=null,ready=false,busy=false,timer=null,pending=null,seq=0;
+  const st=(m,c)=>{const e=$('tryStatus');e.textContent=m;e.className='trystatus'+(c?' '+c:'');};
+  function newWorker(){
+    if(worker)worker.terminate();
+    worker=new Worker(URL.createObjectURL(new Blob([WORKER_SRC],{type:'text/javascript'})));
+    worker.onmessage=e=>{const d=e.data;
+      if(d.type==='status')st(d.msg);
+      else if(d.type==='fatal'){clearTimeout(timer);busy=false;worker=null;st('Could not load Python in this browser. Check the internet connection and try again.','err');if(pending)pending.reject(d.msg);pending=null;}
+      else if(d.type==='done'&&pending&&d.id===pending.id){clearTimeout(timer);ready=true;const p=pending;pending=null;p.resolve(d);}
+    };
+  }
+  function runPy(code,stdin,echo,files){
+    if(!worker)newWorker();
+    return new Promise((resolve,reject)=>{
+      const id=++seq;pending={id,resolve,reject};
+      worker.postMessage({id,url:PY_URL,code,stdin,echo,files});
+      const arm=()=>{clearTimeout(timer);timer=setTimeout(()=>{if(!ready){arm();return;}
+        if(pending&&pending.id===id){worker.terminate();worker=null;ready=false;pending=null;
+          resolve({ok:false,out:'',err:`Stopped: the program ran for more than ${TIME_LIMIT/1000} seconds. Check for an infinite loop, or a loop waiting for an exit choice that is missing from the Input box.`,timeout:true});}},TIME_LIMIT);};
+      arm();
+    });
+  }
+  /* ---------- per-topic data ---------- */
+  const given=()=>topic.code(opts()).map(l=>{const k=l.lastIndexOf('§');return k>=0?l.slice(0,k):l;}).join('\n');
+  const caseInput=()=>{try{return topic.feed?topic.feed(opts()).map(String):[];}catch(e){return[];}};
+  const caseFiles=()=>{try{return topic.files?topic.files(opts()):{};}catch(e){return{};}};
+  const KEY=id=>'pylab-try-'+id;
+  const store={get:k=>{try{return localStorage.getItem(k);}catch(e){return null;}},set:(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}}};
+  function onTopic(){
+    const blocked=topic.id==='calc';
+    $('tryCode').value=store.get(KEY(topic.id))||given();
+    $('tryIn').value=caseInput().join('\n');
+    $('tryOut').textContent='';$('tryCmp').innerHTML='';
+    ['tryRun','tryCheck'].forEach(id=>$(id).disabled=blocked);
+    if(blocked){st('');$('tryCmp').innerHTML='<div class="trynote">This program opens a desktop window with <b>tkinter</b>, which cannot run inside a web page. Copy the code and run it on your computer with <b>python 11_digital_calculator.py</b>. You can still edit the code here.</div>';}
+    else st(topic.files?'The test case file ('+Object.keys(caseFiles()).join(', ')+') is created automatically before your code runs.':'');
+  }
+  /* ---------- buttons ---------- */
+  const stdinLines=()=>{const v=$('tryIn').value.replace(/\r/g,'');return v===''?[]:v.split('\n');};
+  function showOut(r){
+    const o=$('tryOut');o.innerHTML=esc(r.out||'')+(r.err?`<span class="perr">${esc(r.err)}</span>`:'');o.scrollTop=o.scrollHeight;
+  }
+  async function run(){
+    if(busy)return;busy=true;$('tryCmp').innerHTML='';$('tryOut').textContent='';st(ready?'Running…':'Starting Python…');
+    store.set(KEY(topic.id),$('tryCode').value);
+    try{const r=await runPy($('tryCode').value,stdinLines(),true,caseFiles());showOut(r);
+      st(r.ok?'Finished.':(r.timeout?'Stopped.':'Your program stopped with an error (shown in red).'),r.ok?'ok':'err');}
+    catch(e){}
+    busy=false;
+  }
+  const norm=(s,nums)=>{const lines=String(s).split('\n').map(l=>l.replace(/\s+$/,'')).filter(l=>l.trim()!=='');
+    return nums?lines.map(l=>(l.match(/-?\d+(?:\.\d+)?/g)||[]).join(' ')).filter(Boolean):lines;};
+  async function check(){
+    if(busy)return;busy=true;$('tryCmp').innerHTML='';$('tryOut').textContent='';
+    store.set(KEY(topic.id),$('tryCode').value);
+    const stdin=stdinLines(),files=caseFiles();
+    try{
+      st(ready?'Running the given program…':'Starting Python…');
+      const ref=await runPy(given(),stdin,false,files);
+      st('Running your code…');
+      const mine=await runPy($('tryCode').value,stdin,false,files);
+      showOut({out:mine.out,err:mine.err});
+      const nums=$('tryNums').checked,a=norm(ref.out,nums),b=norm(mine.out,nums);
+      const same=mine.ok&&a.length===b.length&&a.every((x,i)=>x===b[i]);
+      const n=Math.max(a.length,b.length);
+      const col=(arr,other)=>arr.map((l,i)=>`<span class="${l!==other[i]?'diff':''}">${esc(l)||'&nbsp;'}</span>`).join('\n');
+      const why=!ref.ok?'The given program could not finish with this input, so check the Input box.':!mine.ok?'Your program stopped with an error before finishing.':same?'':`${a.filter((x,i)=>x!==b[i]).length+Math.max(0,b.length-a.length)} line(s) differ (shown in red).`;
+      $('tryCmp').innerHTML=`<div class="verdict ${same?'ok':'bad'}">${same?'✔ Your output matches the given program for this input.':'✘ The outputs do not match. '+why}</div>
+        <div class="cmp"><div><div class="h">Given program${nums?' (numbers only)':''}</div><pre>${col(a,b)}</pre></div><div><div class="h">Your code${nums?' (numbers only)':''}</div><pre>${col(b,a)}</pre></div></div>
+        <div class="trybtns"><span class="muted">Only printed results are compared (input prompts are not shown). If you print different words, tick “Compare numbers only”.</span></div>`;
+      st(same?'Check passed.':'Check finished.',same?'ok':'err');
+    }catch(e){}
+    busy=false;
+  }
+  $('tryRun').onclick=run;$('tryCheck').onclick=check;
+  $('tryLoad').onclick=()=>{$('tryCode').value=given();store.set(KEY(topic.id),$('tryCode').value);st('Loaded the given program.');};
+  $('tryClear').onclick=()=>{$('tryCode').value='';$('tryCode').focus();};
+  $('tryUseCase').onclick=()=>{$('tryIn').value=caseInput().join('\n');st('Input set from the test case above.');};
+  $('tryCode').addEventListener('keydown',e=>{
+    if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();run();return;}
+    if(e.key==='Tab'){e.preventDefault();const t=e.target,s=t.selectionStart,en=t.selectionEnd;
+      if(e.shiftKey){const ls=t.value.lastIndexOf('\n',s-1)+1;if(t.value.slice(ls,ls+4)==='    '){t.value=t.value.slice(0,ls)+t.value.slice(ls+4);t.selectionStart=t.selectionEnd=Math.max(ls,s-4);}}
+      else{t.value=t.value.slice(0,s)+'    '+t.value.slice(en);t.selectionStart=t.selectionEnd=s+4;}}
+    if(e.key==='Enter'&&!e.ctrlKey){const t=e.target,s=t.selectionStart,ls=t.value.lastIndexOf('\n',s-1)+1,line=t.value.slice(ls,s);
+      let ind=line.match(/^ */)[0];if(/:\s*$/.test(line))ind+='    ';e.preventDefault();t.value=t.value.slice(0,s)+'\n'+ind+t.value.slice(t.selectionEnd);t.selectionStart=t.selectionEnd=s+1+ind.length;}
+  });
+  $('tryCode').addEventListener('input',()=>store.set(KEY(topic.id),$('tryCode').value));
+  /* test-case input for the earlier topics */
+  const F={
+    lq:o=>qFeed(o,'lq'),cq:o=>qFeed(o,'cq'),task:o=>qFeed(o,'task'),
+    ls:o=>{const a=nums(o.list).slice(0,14);return[a.length,...a,o.key.trim()];},
+    bs:o=>{const a=nums(o.list).slice(0,16);return[a.length,...a,o.key.trim()];},
+    bub:o=>{const a=nums(o.list).slice(0,10);return[a.length,...a];},
+    sll:o=>{const L=[],vals=[];toks(o.ops).forEach(t=>{const m=t.match(/^([BEDT])\s*(-?\d+)?$/i);if(!m)return;const c=m[1].toUpperCase(),v=m[2];
+      if(c==='B'){L.push('1',v);vals.unshift(+v);}else if(c==='E'){L.push('2',v);vals.push(+v);}else if(c==='D'){L.push('3');if(vals.length){L.push(v);const k=vals.indexOf(+v);if(k>=0)vals.splice(k,1);}}else L.push('4');});return L.concat('5');}
+  };
+  function qFeed(o,kind){const size=+o.size,L=[o.size.trim()];let front=0,rear=0,cnt=0;const dq=kind==='task'?'X':'D';
+    toks(o.ops).forEach(t=>{const u=t.toUpperCase();
+      if(u===dq){L.push('2');if(kind==='lq'){if(front!==rear){front++;if(front===rear)front=rear=0;}}else if(cnt)cnt--;}
+      else if(u==='S')L.push('3');
+      else{L.push('1');const full=kind==='lq'?rear===size:cnt===size;if(!full){L.push(t);if(kind==='lq')rear++;else cnt++;}}});
+    return L.concat('4');}
+  TOPICS.forEach(t=>{if(!t.feed&&F[t.id])t.feed=F[t.id];});
+  /* hook topic changes */
+  const baseLoad=load;load=function(){baseLoad();onTopic();};
+  onTopic();
+})();
+</script>
+
 </body></html>
